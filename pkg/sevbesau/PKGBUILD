@@ -1,0 +1,113 @@
+# Maintainer: Seppe Van Besauw <seppe@sevbesau.xyz>
+pkgbase=sevbesau
+pkgname=(sevbesau-base sevbesau-dotfiles sevbesau-desktop)
+pkgver=0.1.3
+pkgrel=1
+pkgdesc="System configuration for sevbesau systems"
+arch=(any)
+url="https://github.com/sevbesau/arch-pkgs"
+license=(MIT)
+groups=(sevbesau)
+depends=(git)
+
+rootdir=$PWD
+
+# Installs dotfiles into /etc/skel so every new user 
+# will be set up with the dotfiles repo.
+package_sevbesau-dotfiles() {
+	install=sevbesau-dotfiles.install
+	
+	mkdir -p "$pkgdir/usr/share/sevbesau"
+	git clone 'https://github.com/sevbesau/dotfiles.git' "$pkgdir/usr/share/sevbesau/dotfiles"
+}
+
+# Base config
+package_sevbesau-base() {
+	install=sevbesau-base.install
+	
+	depends=(
+		# Needs dotfiles
+		sevbesau-dotfiles
+
+		# Base packages
+		base linux linux-firmware man-db man-pages neovim
+
+		# Base devel	
+		base-devel unzip bash-completion s3cmd openssh devtools git-lfs
+
+		# Extra general packages
+		wget dialog btop
+		
+		# Nicer (bigger) tty font
+		terminus-font
+
+		# Docker
+		docker docker-compose
+		
+		# Node toolsarch/pkg/sevbesau/sevbesau-desktop.install
+		yarn npm nodejs prettier
+		
+		# Graphical boot
+		plymouth
+		
+		# Networking
+		wpa_supplicant
+	)
+
+	cp -a "$rootdir/files-base/"* "$pkgdir"
+	chmod -R 0750 "$pkgdir/etc/sudoers.d"
+}
+
+# Desktop environment
+package_sevbesau-desktop() {
+	install=sevbesau-desktop.install
+
+	depends=(
+		# Depends on the base config
+		sevbesau-base
+		
+		# Desktop env
+		hyprland 			# window manager
+		hyprpaper 			# wallpapers
+		rofi 				# system menu's
+		dunst				# notifications
+		adapta-gtk-theme	# gtk theme
+		papirus-icon-theme	# icons theme
+
+		
+		# Bluetooth
+		# TODO
+		
+		# Video
+   	mpv gstreamer
+   	
+   	# Audio
+		pipewire pipewire-audio pipewire-pulse pipewire-alsa 		# Framework
+		easyeffects calf lsp-plugins-lv2 zam-plugins-lv2 mda.lv2	# Effects
+		mpd mpc														# Players
+		
+		# Fonts
+		ttf-hack-nerd ttf-joypixels noto-fonts-emoji
+		
+		# Tools
+		xdg-utils nwg-look
+		
+		# Applications
+		kitty firefox discord code
+		transmission-gtk toilet
+		
+		# Aur packages in our own repo
+		1password prismlauncher
+		xcursor-breeze # cursor theme
+
+		# slack-desktop  youtube-dl
+	)
+
+	cp -a "$rootdir/files-desktop/"* "$pkgdir"
+}
+
+package_sevbesau-amd-gpu() {
+	depends=(
+		mesa vulkan-radeon
+	)
+}

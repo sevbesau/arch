@@ -1,0 +1,4 @@
+# Managed by sevbesau-base package
+# https://github.com/sevbesau/arch-repo
+
+%wheel ALL=(ALL) ALL

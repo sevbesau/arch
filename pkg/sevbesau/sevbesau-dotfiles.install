@@ -1,0 +1,13 @@
+post_install() {
+    post_upgrade
+}
+
+post_upgrade() {
+    # Move dotfiles from instal location to /etc/skel
+    rm -rf /etc/skel
+    cp -ar /usr/share/sevbesau/dotfiles /etc/skel
+
+    # Move git dir to .local/share
+    [ -d /etc/skel/.local/share ] || mkdir -p /etc/skel/.local/share
+	mv /etc/skel/.git /etc/skel/.local/share/dotfiles.git
+}

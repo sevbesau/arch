@@ -1,0 +1,36 @@
+post_install() {
+    post_upgrade
+}
+
+post_upgrade() {
+    # Set timezone
+    ln -sf /usr/share/zoneinfo/Europe/Brussels  "/etc/localtime"
+
+    # Set system language
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+
+    # Generate english and dutch locales
+    sed 's/#en_GB/en_GB/' -i /etc/locale.gen
+    sed 's/#en_US/en_US/' -i /etc/locale.gen
+    sed 's/#nl_BE/nl_BE/' -i /etc/locale.gen
+    locale-gen
+    
+    # Install plymouth themes
+	git clone "https://github.com/adi1090x/plymouth-themes.git" /tmp/plymouth
+ 	mkdir -p /usr/share/plymouth/themes
+	cp -r /tmp/plymouth/pack_{1..4}/* /usr/share/plymouth/themes/
+    rm -r /tmp/plymouth
+
+    # Use systemd-resolved as dns resovler
+    ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+    
+    # Starting systemd services
+    systemctl enable --now systemd-networkd.service
+    systemctl enable --now systemd-resolved.service
+    
+    # Hack to install files that are 'owned' by other software
+    cp /usr/share/sevbesau/etc/inputrc /etc/inputrc
+    cp /usr/share/sevbesau/etc/vconsole.conf /etc/vconsole.conf
+    cp /usr/share/sevbesau/etc/bash.bashrc /etc/bash.bashrc
+    cp /usr/share/sevbesau/etc/plymouth/plymouthd.conf /etc/plymouth/plymouthd.conf
+}

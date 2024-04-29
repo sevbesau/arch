@@ -1,0 +1,9 @@
+[submodule "pkg/prismlauncher"]
+	path = pkg/prismlauncher
+	url = https://aur.archlinux.org/prismlauncher.git
+[submodule "pkg/xcursor-breeze"]
+	path = pkg/xcursor-breeze
+	url = https://aur.archlinux.org/xcursor-breeze.git
+[submodule "pkg/1password"]
+	path = pkg/1password
+	url = https://aur.archlinux.org/1password.git
