@@ -5,5 +5,7 @@ post_install() {
 post_upgrade() {
     # start and enable pipewire-pulse.sevice
     sleep 1
+    
+    systemctl enable --now bluetooth.service
 
 }

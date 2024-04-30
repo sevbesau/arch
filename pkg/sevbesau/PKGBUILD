@@ -33,7 +33,7 @@ package_sevbesau-base() {
 		base linux linux-firmware man-db man-pages neovim
 
 		# Base devel	
-		base-devel unzip bash-completion s3cmd openssh devtools git-lfs
+		base-devel unzip bash-completion s3cmd openssh devtools zip
 
 		# Extra general packages
 		wget dialog btop
@@ -67,47 +67,41 @@ package_sevbesau-desktop() {
 		sevbesau-base
 		
 		# Desktop env
-		hyprland 			# window manager
-		hyprpaper 			# wallpapers
-		rofi 				# system menu's
-		dunst				# notifications
-		adapta-gtk-theme	# gtk theme
-		papirus-icon-theme	# icons theme
+		hyprland 						# window manager
+		hyprpaper 					# wallpapers
+		rofi-wayland 				# system menu's
+		dunst								# notifications
+		adapta-gtk-theme		# gtk theme
+		papirus-icon-theme	# icon theme
+		xcursor-breeze 			# (AUR) cursor theme 
+		nemo 								# file manager
+		kitty 							# terminal
+		firefox 						# web browser
+		mpv									# video player
+		gstreamer						# video streaming utility
+		mpd 								# music player deamon
+		mpc									# mpd control utility
+		ttf-hack-nerd 			# monospace font
+		ttf-joypixels 			# emoji font
+		noto-fonts-emoji		# emoji font
+		xdg-utils 					# xdg utilities
+		nwg-look						# gtk theme picker
+		discord 						# chat client
+		code								# code editor
+		transmission-gtk 		# torrent client
+		toilet							# ascii text art generator
+		1password 					# (AUR) password manager
+		prismlauncher				# (AUR) minecraft launcher
+		bluez								# bluetooth protocol stack
+		bluez-utils 				# bluetoothctl
+   	# audio framework
+		pipewire pipewire-audio pipewire-pulse pipewire-alsa pavucontrol 		
+		# audio effects
+		easyeffects calf lsp-plugins-lv2 zam-plugins-lv2 mda.lv2						
 
 		
-		# Bluetooth
-		# TODO
-		
-		# Video
-   	mpv gstreamer
-   	
-   	# Audio
-		pipewire pipewire-audio pipewire-pulse pipewire-alsa 		# Framework
-		easyeffects calf lsp-plugins-lv2 zam-plugins-lv2 mda.lv2	# Effects
-		mpd mpc														# Players
-		
-		# Fonts
-		ttf-hack-nerd ttf-joypixels noto-fonts-emoji
-		
-		# Tools
-		xdg-utils nwg-look
-		
-		# Applications
-		kitty firefox discord code
-		transmission-gtk toilet
-		
-		# Aur packages in our own repo
-		1password prismlauncher
-		xcursor-breeze # cursor theme
-
 		# slack-desktop  youtube-dl
 	)
 
 	cp -a "$rootdir/files-desktop/"* "$pkgdir"
-}
-
-package_sevbesau-amd-gpu() {
-	depends=(
-		mesa vulkan-radeon
-	)
 }

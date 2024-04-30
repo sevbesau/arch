@@ -47,12 +47,21 @@ sync() {
     echo "Running Sync"
 
     # Update local git repo
-    echo "(1/2) Updating local repo"
+    echo "(1/3) Updating local repo"
     git push
 
     # Pull changes on file server
-    echo "(2/2) Updating remote repo"
+    echo "(2/3) Updating remote repo"
     ssh root@arch.sevbesau.xyz 'cd /var/www/arch.sevbesau.xyz; git pull'
+    
+    # Sending packages to server
+    echo "(3/3) Uploading packages to remote repo"
+    pushd repo
+    zip -r packages.zip *.pkg.tar.zst
+    scp packages.zip arch-repo:/var/www/arch.sevbesau.xyz/repo
+    ssh arch-repo -f 'cd /var/www/arch.sevbesau.xyz/repo; unzip packages.zip; rm packages.zip'
+    rm packages.zip
+    popd
 }
 
 commit-repo() {

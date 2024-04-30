@@ -31,6 +31,5 @@ post_upgrade() {
     # Hack to install files that are 'owned' by other software
     cp /usr/share/sevbesau/etc/inputrc /etc/inputrc
     cp /usr/share/sevbesau/etc/vconsole.conf /etc/vconsole.conf
-    cp /usr/share/sevbesau/etc/bash.bashrc /etc/bash.bashrc
     cp /usr/share/sevbesau/etc/plymouth/plymouthd.conf /etc/plymouth/plymouthd.conf
 }
