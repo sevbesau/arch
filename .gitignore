@@ -1,3 +1,4 @@
 root/
 *.pkg.tar.zst
 *.log
+*.zip

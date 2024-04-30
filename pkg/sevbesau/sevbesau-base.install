@@ -28,6 +28,9 @@ post_upgrade() {
     systemctl enable --now systemd-networkd.service
     systemctl enable --now systemd-resolved.service
     
+    # Reload udev rules
+    systemctl restart systemd-udevd
+    
     # Hack to install files that are 'owned' by other software
     cp /usr/share/sevbesau/etc/inputrc /etc/inputrc
     cp /usr/share/sevbesau/etc/vconsole.conf /etc/vconsole.conf

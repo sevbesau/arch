@@ -33,7 +33,7 @@ package_sevbesau-base() {
 		base linux linux-firmware man-db man-pages neovim
 
 		# Base devel	
-		base-devel unzip bash-completion s3cmd openssh devtools zip
+		base-devel unzip bash-completion s3cmd openssh devtools zip usbutils
 
 		# Extra general packages
 		wget dialog btop

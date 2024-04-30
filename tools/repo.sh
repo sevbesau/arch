@@ -42,24 +42,34 @@ build-all() {
     done
 }
 
-# Sync all packages to the repo server
-sync() {
-    echo "Running Sync"
-
+sync-git() {
     # Update local git repo
-    echo "(1/3) Updating local repo"
+    echo "Updating local repo"
     git push
 
     # Pull changes on file server
-    echo "(2/3) Updating remote repo"
+    echo "Updating remote repo"
     ssh root@arch.sevbesau.xyz 'cd /var/www/arch.sevbesau.xyz; git pull'
-    
+}
+
+sync-packages() {
     # Sending packages to server
-    echo "(3/3) Uploading packages to remote repo"
+    echo "Uploading packages to remote repo"
     pushd repo
     zip -r packages.zip *.pkg.tar.zst
     scp packages.zip arch-repo:/var/www/arch.sevbesau.xyz/repo
-    ssh arch-repo -f 'cd /var/www/arch.sevbesau.xyz/repo; unzip packages.zip; rm packages.zip'
+    ssh arch-repo -f 'cd /var/www/arch.sevbesau.xyz/repo; unzip -o packages.zip && rm packages.zip'
+    rm packages.zip
+    popd
+}
+
+sync-package() {
+    # Sending package to server
+    echo "Uploading $1 to remote repo"
+    pushd repo
+    zip -r packages.zip ${1}*.pkg.tar.zst
+    scp packages.zip arch-repo:/var/www/arch.sevbesau.xyz/repo
+    ssh arch-repo -f 'cd /var/www/arch.sevbesau.xyz/repo; unzip -o packages.zip && rm packages.zip'
     rm packages.zip
     popd
 }
@@ -101,6 +111,7 @@ ADD_PACKAGE=false
 ADD_ALL_PACKAGES=false
 REMOVE_PACKAGE=false
 SYNC=false
+SYNC_ALL=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -110,6 +121,7 @@ while [[ $# -gt 0 ]]; do
         -A|--addall) ADD_ALL_PACKAGES=true; shift ;;
         -r|--remove) REMOVE_PACKAGE=true; shift ;;
         -s|--sync) SYNC=true; shift ;;
+        -S|--syncall) SYNC_ALL=true; shift ;;
         -h|--help) print_help; exit 0 ;;
         -*) print_help "Unrecognized parameter: '$1'"; exit 1 ;;
         *) PACKAGE="$1"; shift ;;
@@ -117,16 +129,16 @@ while [[ $# -gt 0 ]]; do
 done
 
 if $BUILD; then
-    [ -n "$PACKAGE" ] || print_help "No package specified"; exit 1
+    [ -z "$PACKAGE" ] && print_help "No package specified" && exit 1
     build-package "$PACKAGE"
 fi
 
-if $BUILD_ALL; then
-    build-all
-fi
+#if $BUILD_ALL; then
+#    build-all
+#fi
 
 if $ADD_PACKAGE; then
-    [ -n "$PACKAGE" ] || print_help "No package specified"; exit 1
+    [ -z "$PACKAGE" ] && print_help "No package specified" && exit 1
     add "$PACKAGE"
 fi
 
@@ -135,12 +147,19 @@ if $ADD_ALL_PACKAGES; then
 fi
 
 if $REMOVE_PACKAGE; then
-    [ -n "$PACKAGE" ] || print_help "No package specified"; exit 1
+    [ -z "$PACKAGE" ] && print_help "No package specified" && exit 1
     remove "$PACKAGE"
 fi
 
 if $SYNC; then
-    sync
+    [ -z "$PACKAGE" ] && print_help "No package specified" && exit 1
+    sync-git
+    sync-package "$PACKAGE"
+fi
+
+if $SYNC_ALL; then
+    sync-git
+    sync-packges
 fi
 
 exit 0
