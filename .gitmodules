@@ -10,3 +10,6 @@
 [submodule "pkg/xob"]
 	path = pkg/xob
 	url = https://aur.archlinux.org/xob.git
+[submodule "pkg/python-pulsectl"]
+	path = pkg/python-pulsectl
+	url = https://aur.archlinux.org/python-pulsectl.git
