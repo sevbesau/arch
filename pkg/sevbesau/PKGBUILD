@@ -1,7 +1,7 @@
 # Maintainer: Seppe Van Besauw <seppe@sevbesau.xyz>
 pkgbase=sevbesau
 pkgname=(sevbesau-base sevbesau-dotfiles sevbesau-desktop)
-pkgver=0.1.3
+pkgver=0.1.4
 pkgrel=1
 pkgdesc="System configuration for sevbesau systems"
 arch=(any)
@@ -94,6 +94,9 @@ package_sevbesau-desktop() {
 		prismlauncher				# (AUR) minecraft launcher
 		bluez								# bluetooth protocol stack
 		bluez-utils 				# bluetoothctl
+		playerctl						# send MPRIS commands to media players
+		wev									# wayland event logger
+		nsxiv								# image viewer
    	# audio framework
 		pipewire pipewire-audio pipewire-pulse pipewire-alsa pavucontrol 		
 		# audio effects
