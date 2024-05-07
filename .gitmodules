@@ -13,3 +13,6 @@
 [submodule "pkg/python-pulsectl"]
 	path = pkg/python-pulsectl
 	url = https://aur.archlinux.org/python-pulsectl.git
+[submodule "pkg/slack-desktop"]
+	path = pkg/slack-desktop
+	url = https://aur.archlinux.org/slack-desktop.git
