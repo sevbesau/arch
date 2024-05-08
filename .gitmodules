@@ -16,3 +16,6 @@
 [submodule "pkg/slack-desktop"]
 	path = pkg/slack-desktop
 	url = https://aur.archlinux.org/slack-desktop.git
+[submodule "pkg/heroku-cli"]
+	path = pkg/heroku-cli
+	url = https://aur.archlinux.org/heroku-cli.git
