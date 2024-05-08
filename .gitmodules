@@ -19,3 +19,6 @@
 [submodule "pkg/heroku-cli"]
 	path = pkg/heroku-cli
 	url = https://aur.archlinux.org/heroku-cli.git
+[submodule "pkg/mongodb-compass"]
+	path = pkg/mongodb-compass
+	url = https://aur.archlinux.org/mongodb-compass.git
