@@ -22,3 +22,6 @@
 [submodule "pkg/mongodb-compass"]
 	path = pkg/mongodb-compass
 	url = https://aur.archlinux.org/mongodb-compass.git
+[submodule "overskride"]
+	path = overskride
+	url = https://aur.archlinux.org/overskride.git
