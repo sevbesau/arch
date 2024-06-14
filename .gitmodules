@@ -25,6 +25,3 @@
 [submodule "overskride"]
 	path = pkg/overskride
 	url = https://aur.archlinux.org/overskride.git
-[submodule "pkg/python-validity"]
-	path = pkg/python-validity
-	url = https://aur.archlinux.org/python-validity.git
