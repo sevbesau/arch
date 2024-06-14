@@ -33,7 +33,7 @@ package_sevbesau-base() {
 		base linux linux-firmware man-db man-pages neovim
 
 		# Base devel	
-		base-devel unzip bash-completion s3cmd openssh devtools zip usbutils
+		base-devel unzip bash-completion s3cmd openssh devtools zip usbutils heroku
 
 		# Extra general packages
 		wget dialog btop
@@ -58,6 +58,18 @@ package_sevbesau-base() {
 	chmod -R 0750 "$pkgdir/etc/sudoers.d"
 }
 
+# Laptop specific config
+package_sevbesau-laptop() {
+	install=sevbesau-desktop.install
+
+	depends=(
+		# Depends on the desktop environment
+		sevbesau-desktop
+	
+		
+	cp -a "$rootdir/files-desktop/"* "$pkgdir"
+}
+
 # Desktop environment
 package_sevbesau-desktop() {
 	install=sevbesau-desktop.install
@@ -66,44 +78,7 @@ package_sevbesau-desktop() {
 		# Depends on the base config
 		sevbesau-base
 		
-		# Desktop env
-		hyprland 						# window manager
-		hyprpaper 					# wallpapers
-		rofi-wayland 				# system menu's
-		dunst								# notifications
-		adapta-gtk-theme		# gtk theme
-		papirus-icon-theme	# icon theme
-		xcursor-breeze 			# (AUR) cursor theme 
-		nemo 								# file manager
-		kitty 							# terminal
-		firefox 						# web browser
-		mpv									# video player
-		gstreamer						# video streaming utility
-		mpd 								# music player deamon
-		mpc									# mpd control utility
-		ttf-hack-nerd 			# monospace font
-		ttf-joypixels 			# emoji font
-		noto-fonts-emoji		# emoji font
-		xdg-utils 					# xdg utilities
-		nwg-look						# gtk theme picker
-		discord 						# chat client
-		code								# code editor
-		transmission-gtk 		# torrent client
-		toilet							# ascii text art generator
-		1password 					# (AUR) password manager
-		prismlauncher				# (AUR) minecraft launcher
-		bluez								# bluetooth protocol stack
-		bluez-utils 				# bluetoothctl
-		playerctl						# send MPRIS commands to media players
-		wev									# wayland event logger
-		nsxiv								# image viewer
-   	# audio framework
-		pipewire pipewire-audio pipewire-pulse pipewire-alsa pavucontrol 		
-		# audio effects
-		easyeffects calf lsp-plugins-lv2 zam-plugins-lv2 mda.lv2						
-
-		
-		# slack-desktop  youtube-dl
+		brightnessctl
 	)
 
 	cp -a "$rootdir/files-desktop/"* "$pkgdir"

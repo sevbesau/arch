@@ -28,6 +28,7 @@ make-chroot() {
 
 # Build a single package
 build-package() {
+    make-chroot
     pushd pkg/"$1"
     makechrootpkg -cur "$CHROOT"
     mv ./*.pkg.tar.zst "$REPO"
